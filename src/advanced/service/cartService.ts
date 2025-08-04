@@ -142,6 +142,22 @@ const createFinalTotals = (
 };
 
 /**
+ * 할인율을 계산합니다.
+ * @param discountedPrice 할인된 가격
+ * @param originalPrice 원래 가격
+ * @returns 할인율 (0-100 사이의 정수)
+ */
+export const calculateDiscountRate = (
+  discountedPrice: number,
+  originalPrice: number
+): number => {
+  if (originalPrice <= 0) return 0;
+
+  const discountRate = (1 - discountedPrice / originalPrice) * 100;
+  return Math.round(discountRate);
+};
+
+/**
  * 장바구니의 총 가격을 계산합니다.
  * @param cart 장바구니 아이템 배열
  * @param selectedCoupon 선택된 쿠폰

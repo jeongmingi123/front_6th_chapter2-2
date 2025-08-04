@@ -1,5 +1,8 @@
 import { CartItem as CartItemType } from "../../../types";
-import { calculateItemTotal } from "../../service/cartService";
+import {
+  calculateItemTotal,
+  calculateDiscountRate,
+} from "../../service/cartService";
 
 interface CartItemProps {
   item: CartItemType;
@@ -17,9 +20,7 @@ export const CartItem = ({
   const itemTotal = calculateItemTotal(item, cart);
   const originalPrice = item.product.price * item.quantity;
   const hasDiscount = itemTotal < originalPrice;
-  const discountRate = hasDiscount
-    ? Math.round((1 - itemTotal / originalPrice) * 100)
-    : 0;
+  const discountRate = calculateDiscountRate(itemTotal, originalPrice);
 
   const onRemoveClick = () => {
     onRemove(item.product.id);
