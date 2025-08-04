@@ -1,7 +1,7 @@
 import { ProductWithUI } from "../../types";
 import { ProductCartItem } from "./ProductCartItem";
 import { useCartContext } from "../../contexts/CartContext";
-import { useAppContext } from "../../contexts/AppContext";
+import { useAdminContext } from "../../contexts/AdminContext";
 
 interface ProductCartListProps {
   filteredProducts: ProductWithUI[];
@@ -9,7 +9,7 @@ interface ProductCartListProps {
 
 export const ProductCartList = ({ filteredProducts }: ProductCartListProps) => {
   const { getRemainingStock, addToCart } = useCartContext();
-  const { isAdmin } = useAppContext();
+  const { isAdmin } = useAdminContext();
 
   return (
     <>

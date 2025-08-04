@@ -2,12 +2,12 @@ import { CartItem } from "./CartItem";
 import { calculateCartTotal } from "../../service/cartService";
 import { useCartContext } from "../../contexts/CartContext";
 import { useCouponContext } from "../../contexts/CouponContext";
-import { useAppContext } from "../../contexts/AppContext";
+import { useCouponSelectionContext } from "../../contexts/CouponSelectionContext";
 
 export const CartSection = () => {
   const { cart, removeFromCart, updateQuantity } = useCartContext();
   const { coupons, applyCoupon, completeOrder } = useCouponContext();
-  const { selectedCoupon } = useAppContext();
+  const { selectedCoupon } = useCouponSelectionContext();
 
   const totals = calculateCartTotal(cart, selectedCoupon);
 

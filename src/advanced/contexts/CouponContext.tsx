@@ -1,7 +1,7 @@
 import React, { createContext, useContext, ReactNode } from "react";
 import { useCoupons } from "../hooks/useCoupons";
 import { useNotificationContext } from "./NotificationContext";
-import { useAppContext } from "./AppContext";
+import { useCouponSelectionContext } from "./CouponSelectionContext";
 import { Coupon } from "../../types";
 import { useCartContext } from "./CartContext";
 import { calculateCartTotal } from "../service/cartService";
@@ -35,7 +35,7 @@ interface CouponProviderProps {
 
 export const CouponProvider: React.FC<CouponProviderProps> = ({ children }) => {
   const { addNotification } = useNotificationContext();
-  const { selectedCoupon, setSelectedCoupon } = useAppContext();
+  const { selectedCoupon, setSelectedCoupon } = useCouponSelectionContext();
   const {
     coupons,
     addCoupon: baseAddCoupon,

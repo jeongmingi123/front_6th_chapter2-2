@@ -1,5 +1,6 @@
 import { useDebounce } from "./hooks/useDebounce";
-import { useAppContext } from "./contexts/AppContext";
+import { useAdminContext } from "./contexts/AdminContext";
+import { useSearchContext } from "./contexts/SearchContext";
 import { useNotificationContext } from "./contexts/NotificationContext";
 import { useProductContext } from "./contexts/ProductContext";
 import { useCartContext } from "./contexts/CartContext";
@@ -14,7 +15,8 @@ import { initialProducts } from "./data/initialData";
 
 const AppContent = () => {
   // Context에서 상태와 함수들을 가져옴
-  const { isAdmin, setIsAdmin, searchTerm, setSearchTerm } = useAppContext();
+  const { isAdmin, setIsAdmin } = useAdminContext();
+  const { searchTerm, setSearchTerm } = useSearchContext();
   const { notifications, removeNotification } = useNotificationContext();
   const { products } = useProductContext();
   const { cart, totalItemCount } = useCartContext();

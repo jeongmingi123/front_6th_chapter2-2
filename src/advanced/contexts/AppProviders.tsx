@@ -1,5 +1,7 @@
 import React from "react";
-import { AppProvider } from "./AppContext";
+import { AdminProvider } from "./AdminContext";
+import { SearchProvider } from "./SearchContext";
+import { CouponSelectionProvider } from "./CouponSelectionContext";
 import { NotificationProvider } from "./NotificationContext";
 import { ProductProvider } from "./ProductContext";
 import { CartProvider } from "./CartContext";
@@ -11,14 +13,18 @@ interface AppProvidersProps {
 
 export const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
   return (
-    <AppProvider>
-      <NotificationProvider>
-        <ProductProvider>
-          <CartProvider>
-            <CouponProvider>{children}</CouponProvider>
-          </CartProvider>
-        </ProductProvider>
-      </NotificationProvider>
-    </AppProvider>
+    <AdminProvider>
+      <SearchProvider>
+        <CouponSelectionProvider>
+          <NotificationProvider>
+            <ProductProvider>
+              <CartProvider>
+                <CouponProvider>{children}</CouponProvider>
+              </CartProvider>
+            </ProductProvider>
+          </NotificationProvider>
+        </CouponSelectionProvider>
+      </SearchProvider>
+    </AdminProvider>
   );
 };
