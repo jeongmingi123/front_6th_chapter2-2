@@ -116,7 +116,7 @@ export const ProductManagement = ({
                   {product.name}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {formatPrice(product.price, product.id, true)}
+                  {formatPrice(product.price, true)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {product.stock}
