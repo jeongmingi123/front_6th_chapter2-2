@@ -30,7 +30,7 @@ export const ProductManagement = ({
     discounts: [],
   });
 
-  const handleProductSubmit = (e: React.FormEvent) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (editingProduct === "new") {
@@ -52,7 +52,7 @@ export const ProductManagement = ({
     setShowProductForm(false);
   };
 
-  const startEditProduct = (product: ProductWithUI) => {
+  const onEdit = (product: ProductWithUI) => {
     setEditingProduct(product.id);
     setProductForm({
       name: product.name,
@@ -126,7 +126,7 @@ export const ProductManagement = ({
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button
-                    onClick={() => startEditProduct(product)}
+                    onClick={() => onEdit(product)}
                     className="text-indigo-600 hover:text-indigo-900 mr-4"
                   >
                     수정
@@ -146,7 +146,7 @@ export const ProductManagement = ({
 
       {showProductForm && (
         <div className="p-6 border-t border-gray-200 bg-gray-50">
-          <form onSubmit={handleProductSubmit} className="space-y-4">
+          <form onSubmit={onSubmit} className="space-y-4">
             <h3 className="text-lg font-medium text-gray-900">
               {editingProduct === "new" ? "새 상품 추가" : "상품 수정"}
             </h3>
