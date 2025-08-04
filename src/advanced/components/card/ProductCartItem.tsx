@@ -1,6 +1,6 @@
 import { ProductWithUI } from "../../types";
-import { formatProductPrice } from "../../utils/formatters";
 import { PRODUCT_CONSTANTS } from "../../constants/product";
+import { formatProductPrice } from "../../../basic/utils/formatters";
 
 interface ProductCartItemProps {
   product: ProductWithUI;
