@@ -30,3 +30,9 @@ export interface CartTotals {
   totalBeforeDiscount: number;
   totalAfterDiscount: number;
 }
+
+// 할인 관련 타입 정의
+export type DiscountInfo = {
+  quantity: number;
+  rate: number;
+};

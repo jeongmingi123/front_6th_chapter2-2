@@ -30,3 +30,8 @@ export interface CartTotals {
   totalBeforeDiscount: number;
   totalAfterDiscount: number;
 }
+
+export type DiscountInfo = {
+  quantity: number;
+  rate: number;
+};
