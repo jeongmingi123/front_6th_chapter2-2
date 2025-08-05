@@ -2,23 +2,13 @@ import { useState } from "react";
 import { CouponForm } from "../../types";
 import { Coupon } from "../../../types";
 import { formatPrice } from "../../utils/formatters";
+import { useCouponContext } from "../../contexts/CouponContext";
+import { useNotificationContext } from "../../contexts/NotificationContext";
 
-interface CouponManagementProps {
-  coupons: Coupon[];
-  onAddCoupon: (coupon: Coupon) => void;
-  onDeleteCoupon: (couponCode: string) => void;
-  addNotification: (
-    message: string,
-    type?: "error" | "success" | "warning"
-  ) => void;
-}
+export const CouponManagement = () => {
+  const { coupons, addCoupon, deleteCoupon } = useCouponContext();
+  const { addNotification } = useNotificationContext();
 
-export const CouponManagement = ({
-  coupons,
-  onAddCoupon,
-  onDeleteCoupon,
-  addNotification,
-}: CouponManagementProps) => {
   const [showCouponForm, setShowCouponForm] = useState(false);
   const [couponForm, setCouponForm] = useState<CouponForm>({
     name: "",
@@ -49,7 +39,7 @@ export const CouponManagement = ({
       discountValue: couponForm.discountValue,
     };
 
-    onAddCoupon(newCoupon);
+    addCoupon(newCoupon);
     addNotification("쿠폰이 생성되었습니다.", "success");
 
     setCouponForm({
@@ -149,7 +139,7 @@ export const CouponManagement = ({
                   </p>
                 </div>
                 <button
-                  onClick={() => onDeleteCoupon(coupon.code)}
+                  onClick={() => deleteCoupon(coupon.code)}
                   className="text-gray-400 hover:text-red-600"
                 >
                   <svg

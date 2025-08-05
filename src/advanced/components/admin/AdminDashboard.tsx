@@ -1,16 +1,8 @@
 import { useState } from "react";
-import { useProductContext } from "../../contexts/ProductContext";
-import { useCouponContext } from "../../contexts/CouponContext";
-import { useNotificationContext } from "../../contexts/NotificationContext";
 import { ProductManagement } from "./ProductManagement";
 import { CouponManagement } from "./CouponManagement";
 
 export const AdminDashboard = () => {
-  const { products, addProduct, updateProduct, deleteProduct } =
-    useProductContext();
-  const { coupons, addCoupon, deleteCoupon } = useCouponContext();
-  const { addNotification } = useNotificationContext();
-
   const [activeTab, setActiveTab] = useState<"products" | "coupons">(
     "products"
   );
@@ -46,22 +38,7 @@ export const AdminDashboard = () => {
         </nav>
       </div>
 
-      {activeTab === "products" ? (
-        <ProductManagement
-          products={products}
-          onAddProduct={addProduct}
-          onUpdateProduct={updateProduct}
-          onDeleteProduct={deleteProduct}
-          addNotification={addNotification}
-        />
-      ) : (
-        <CouponManagement
-          coupons={coupons}
-          onAddCoupon={addCoupon}
-          onDeleteCoupon={deleteCoupon}
-          addNotification={addNotification}
-        />
-      )}
+      {activeTab === "products" ? <ProductManagement /> : <CouponManagement />}
     </div>
   );
 };

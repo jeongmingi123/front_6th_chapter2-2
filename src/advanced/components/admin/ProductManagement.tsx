@@ -1,25 +1,14 @@
 import { useState } from "react";
 import { ProductWithUI, ProductForm } from "../../types";
 import { formatPrice } from "../../utils/formatters";
+import { useProductContext } from "../../contexts/ProductContext";
+import { useNotificationContext } from "../../contexts/NotificationContext";
 
-interface ProductManagementProps {
-  products: ProductWithUI[];
-  onAddProduct: (product: Omit<ProductWithUI, "id">) => void;
-  onUpdateProduct: (productId: string, updates: Partial<ProductWithUI>) => void;
-  onDeleteProduct: (productId: string) => void;
-  addNotification: (
-    message: string,
-    type?: "error" | "success" | "warning"
-  ) => void;
-}
+export const ProductManagement = () => {
+  const { products, addProduct, updateProduct, deleteProduct } =
+    useProductContext();
+  const { addNotification } = useNotificationContext();
 
-export const ProductManagement = ({
-  products,
-  onAddProduct,
-  onUpdateProduct,
-  onDeleteProduct,
-  addNotification,
-}: ProductManagementProps) => {
   const [showProductForm, setShowProductForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<string | null>(null);
   const [productForm, setProductForm] = useState<ProductForm>({
@@ -34,10 +23,10 @@ export const ProductManagement = ({
     e.preventDefault();
 
     if (editingProduct === "new") {
-      onAddProduct(productForm);
+      addProduct(productForm);
       addNotification("상품이 추가되었습니다.", "success");
     } else if (editingProduct) {
-      onUpdateProduct(editingProduct, productForm);
+      updateProduct(editingProduct, productForm);
       addNotification("상품이 수정되었습니다.", "success");
     }
 
@@ -132,7 +121,7 @@ export const ProductManagement = ({
                     수정
                   </button>
                   <button
-                    onClick={() => onDeleteProduct(product.id)}
+                    onClick={() => deleteProduct(product.id)}
                     className="text-red-600 hover:text-red-900"
                   >
                     삭제
