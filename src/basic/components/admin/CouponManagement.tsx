@@ -28,7 +28,7 @@ export const CouponManagement = ({
   });
   const [validationError, setValidationError] = useState<string>("");
 
-  const onCouponSubmit = (e: React.FormEvent) => {
+  const handleCouponSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // 할인율 검증
@@ -61,7 +61,7 @@ export const CouponManagement = ({
     setShowCouponForm(false);
   };
 
-  const onDiscountValueChange = (value: string) => {
+  const handleDiscountValueChange = (value: string) => {
     const numValue = value === "" ? 0 : parseInt(value);
 
     if (couponForm.discountType === "percentage" && numValue > 100) {
@@ -76,45 +76,47 @@ export const CouponManagement = ({
     });
   };
 
-  const onToggleCouponForm = () => {
+  const handleToggleCouponForm = () => {
     setShowCouponForm(!showCouponForm);
   };
 
-  const onCouponNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCouponNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCouponForm({ ...couponForm, name: e.target.value });
   };
 
-  const onCouponCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCouponCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCouponForm({
       ...couponForm,
       code: e.target.value.toUpperCase(),
     });
   };
 
-  const onDiscountTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleDiscountTypeChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setCouponForm({
       ...couponForm,
       discountType: e.target.value as "amount" | "percentage",
     });
   };
 
-  const onDiscountValueInputChange = (
+  const handleDiscountValueInputChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value;
     if (value === "" || /^\d+$/.test(value)) {
-      onDiscountValueChange(value);
+      handleDiscountValueChange(value);
     }
   };
 
-  const onDiscountValueBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleDiscountValueBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (couponForm.discountType === "percentage" && parseInt(value) > 100) {
       setValidationError("할인율은 100%를 초과할 수 없습니다");
     }
   };
 
-  const onCancelClick = () => {
+  const handleCancelClick = () => {
     setShowCouponForm(false);
     setValidationError("");
   };
@@ -172,7 +174,7 @@ export const CouponManagement = ({
 
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 flex items-center justify-center hover:border-gray-400 transition-colors">
             <button
-              onClick={onToggleCouponForm}
+              onClick={handleToggleCouponForm}
               className="text-gray-400 hover:text-gray-600 flex flex-col items-center"
             >
               <svg
@@ -195,7 +197,7 @@ export const CouponManagement = ({
 
         {showCouponForm && (
           <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-            <form onSubmit={onCouponSubmit} className="space-y-4">
+            <form onSubmit={handleCouponSubmit} className="space-y-4">
               <h3 className="text-md font-medium text-gray-900">
                 새 쿠폰 생성
               </h3>
@@ -210,7 +212,7 @@ export const CouponManagement = ({
                   <input
                     type="text"
                     value={couponForm.name}
-                    onChange={onCouponNameChange}
+                    onChange={handleCouponNameChange}
                     className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border text-sm"
                     placeholder="신규 가입 쿠폰"
                     required
@@ -223,7 +225,7 @@ export const CouponManagement = ({
                   <input
                     type="text"
                     value={couponForm.code}
-                    onChange={onCouponCodeChange}
+                    onChange={handleCouponCodeChange}
                     className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border text-sm font-mono"
                     placeholder="WELCOME2024"
                     required
@@ -235,7 +237,7 @@ export const CouponManagement = ({
                   </label>
                   <select
                     value={couponForm.discountType}
-                    onChange={onDiscountTypeChange}
+                    onChange={handleDiscountTypeChange}
                     className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border text-sm"
                   >
                     <option value="amount">정액 할인</option>
@@ -255,8 +257,8 @@ export const CouponManagement = ({
                         ? ""
                         : couponForm.discountValue
                     }
-                    onChange={onDiscountValueInputChange}
-                    onBlur={onDiscountValueBlur}
+                    onChange={handleDiscountValueInputChange}
+                    onBlur={handleDiscountValueBlur}
                     className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border text-sm"
                     placeholder={
                       couponForm.discountType === "amount" ? "5000" : "10"
@@ -268,7 +270,7 @@ export const CouponManagement = ({
               <div className="flex justify-end gap-3">
                 <button
                   type="button"
-                  onClick={onCancelClick}
+                  onClick={handleCancelClick}
                   className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
                 >
                   취소
