@@ -1,20 +1,19 @@
 import { ProductWithUI } from "../../types";
 import { PRODUCT_CONSTANTS } from "../../constants/product";
 import { formatProductPrice } from "../../../basic/utils/formatters";
+import { useCartContext } from "../../contexts/CartContext";
+import { useAdminContext } from "../../contexts/AdminContext";
 
 interface ProductCartItemProps {
   product: ProductWithUI;
-  remainingStock: number;
-  onAddToCart: (product: ProductWithUI) => void;
-  isAdmin: boolean;
 }
 
-export const ProductCartItem = ({
-  product,
-  remainingStock,
-  onAddToCart,
-  isAdmin,
-}: ProductCartItemProps) => {
+export const ProductCartItem = ({ product }: ProductCartItemProps) => {
+  const { getRemainingStock, addToCart } = useCartContext();
+  const { isAdmin } = useAdminContext();
+
+  const remainingStock = getRemainingStock(product);
+
   return (
     <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
       <div className="relative">
@@ -77,7 +76,7 @@ export const ProductCartItem = ({
         </div>
 
         <button
-          onClick={() => onAddToCart(product)}
+          onClick={() => addToCart(product)}
           disabled={remainingStock <= PRODUCT_CONSTANTS.OUT_OF_STOCK}
           className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
             remainingStock <= PRODUCT_CONSTANTS.OUT_OF_STOCK
