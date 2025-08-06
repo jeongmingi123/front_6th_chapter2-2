@@ -5,6 +5,7 @@ import {
   BULK_PURCHASE_ADDITIONAL_DISCOUNT,
   MAX_DISCOUNT_RATE,
 } from "../constants/cart";
+import { roundNumber } from "../utils/number";
 
 /**
  * 상품의 기본 할인율을 계산합니다.
@@ -16,7 +17,9 @@ const calculateBaseDiscount = (
   discounts: DiscountInfo[],
   quantity: number
 ): number => {
-  if (!discounts || discounts.length === 0) return 0;
+  if (!discounts || discounts.length === 0) {
+    return 0;
+  }
 
   return discounts.reduce((maxDiscount, discount) => {
     const isEligible = quantity >= discount.quantity;
@@ -60,15 +63,17 @@ const applyCouponDiscount = (
   totalAfterDiscount: number,
   selectedCoupon: Coupon | null
 ): number => {
-  if (!selectedCoupon) return totalAfterDiscount;
+  if (!selectedCoupon) {
+    return totalAfterDiscount;
+  }
 
   if (selectedCoupon.discountType === "amount") {
     return Math.max(0, totalAfterDiscount - selectedCoupon.discountValue);
-  } else {
-    return Math.round(
-      totalAfterDiscount * (1 - selectedCoupon.discountValue / 100)
-    );
   }
+
+  return roundNumber(
+    totalAfterDiscount * (1 - selectedCoupon.discountValue / 100)
+  );
 };
 
 /**
@@ -102,7 +107,7 @@ export const calculateItemTotal = (
   const { quantity } = item;
   const discount = getMaxApplicableDiscount(item, cart);
 
-  return Math.round(price * quantity * (1 - discount));
+  return roundNumber(price * quantity * (1 - discount));
 };
 
 /**
@@ -126,22 +131,6 @@ const calculateBaseTotals = (cart: CartItem[]) => {
 };
 
 /**
- * 최종 가격을 반올림하여 반환합니다.
- * @param totals 계산된 가격 정보
- * @param finalTotalAfterDiscount 쿠폰 적용 후 최종 가격
- * @returns 반올림된 최종 가격 정보
- */
-const createFinalTotals = (
-  totals: { totalBeforeDiscount: number; totalAfterDiscount: number },
-  finalTotalAfterDiscount: number
-): CartTotals => {
-  return {
-    totalBeforeDiscount: Math.round(totals.totalBeforeDiscount),
-    totalAfterDiscount: Math.round(finalTotalAfterDiscount),
-  };
-};
-
-/**
  * 할인율을 계산합니다.
  * @param discountedPrice 할인된 가격
  * @param originalPrice 원래 가격
@@ -154,7 +143,7 @@ export const calculateDiscountRate = (
   if (originalPrice <= 0) return 0;
 
   const discountRate = (1 - discountedPrice / originalPrice) * 100;
-  return Math.round(discountRate);
+  return roundNumber(discountRate);
 };
 
 /**
@@ -163,7 +152,6 @@ export const calculateDiscountRate = (
  * @param selectedCoupon 선택된 쿠폰
  * @returns 할인 전후 총 가격 정보
  */
-
 export const calculateCartTotal = (
   cart: CartItem[],
   selectedCoupon: Coupon | null
@@ -187,4 +175,20 @@ export const calculateCartTotal = (
 
   // 최종 결과 반환
   return createFinalTotals(baseTotals, finalTotalAfterDiscount);
+};
+
+/**
+ * 최종 가격을 반올림하여 반환합니다.
+ * @param totals 계산된 가격 정보
+ * @param finalTotalAfterDiscount 쿠폰 적용 후 최종 가격
+ * @returns 반올림된 최종 가격 정보
+ */
+const createFinalTotals = (
+  totals: { totalBeforeDiscount: number; totalAfterDiscount: number },
+  finalTotalAfterDiscount: number
+): CartTotals => {
+  return {
+    totalBeforeDiscount: Math.round(totals.totalBeforeDiscount),
+    totalAfterDiscount: Math.round(finalTotalAfterDiscount),
+  };
 };
