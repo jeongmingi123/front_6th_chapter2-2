@@ -19,6 +19,64 @@ export const ProductManagement = () => {
     discounts: [],
   });
 
+  // 새 상품 추가 버튼 클릭 핸들러
+  const handleAddNewProduct = () => {
+    setEditingProduct("new");
+    setProductForm({
+      name: "",
+      price: 0,
+      stock: 0,
+      description: "",
+      discounts: [],
+    });
+    setShowProductForm(true);
+  };
+
+  // 폼 입력 필드 변경 핸들러들
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProductForm({ ...productForm, name: e.target.value });
+  };
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProductForm({
+      ...productForm,
+      description: e.target.value,
+    });
+  };
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === "" || /^\d+$/.test(value)) {
+      setProductForm({
+        ...productForm,
+        price: value === "" ? 0 : parseInt(value),
+      });
+    }
+  };
+
+  const handleStockChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === "" || /^\d+$/.test(value)) {
+      setProductForm({
+        ...productForm,
+        stock: value === "" ? 0 : parseInt(value),
+      });
+    }
+  };
+
+  // 취소 버튼 클릭 핸들러
+  const handleCancel = () => {
+    setEditingProduct(null);
+    setProductForm({
+      name: "",
+      price: 0,
+      stock: 0,
+      description: "",
+      discounts: [],
+    });
+    setShowProductForm(false);
+  };
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -59,17 +117,7 @@ export const ProductManagement = () => {
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-semibold">상품 목록</h2>
           <button
-            onClick={() => {
-              setEditingProduct("new");
-              setProductForm({
-                name: "",
-                price: 0,
-                stock: 0,
-                description: "",
-                discounts: [],
-              });
-              setShowProductForm(true);
-            }}
+            onClick={handleAddNewProduct}
             className="px-4 py-2 bg-gray-900 text-white text-sm rounded-md hover:bg-gray-800"
           >
             새 상품 추가
@@ -147,9 +195,7 @@ export const ProductManagement = () => {
                 <input
                   type="text"
                   value={productForm.name}
-                  onChange={(e) =>
-                    setProductForm({ ...productForm, name: e.target.value })
-                  }
+                  onChange={handleNameChange}
                   className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border"
                   required
                 />
@@ -161,12 +207,7 @@ export const ProductManagement = () => {
                 <input
                   type="text"
                   value={productForm.description}
-                  onChange={(e) =>
-                    setProductForm({
-                      ...productForm,
-                      description: e.target.value,
-                    })
-                  }
+                  onChange={handleDescriptionChange}
                   className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border"
                 />
               </div>
@@ -177,15 +218,7 @@ export const ProductManagement = () => {
                 <input
                   type="text"
                   value={productForm.price === 0 ? "" : productForm.price}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value === "" || /^\d+$/.test(value)) {
-                      setProductForm({
-                        ...productForm,
-                        price: value === "" ? 0 : parseInt(value),
-                      });
-                    }
-                  }}
+                  onChange={handlePriceChange}
                   className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border"
                   placeholder="숫자만 입력"
                   required
@@ -198,15 +231,7 @@ export const ProductManagement = () => {
                 <input
                   type="text"
                   value={productForm.stock === 0 ? "" : productForm.stock}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value === "" || /^\d+$/.test(value)) {
-                      setProductForm({
-                        ...productForm,
-                        stock: value === "" ? 0 : parseInt(value),
-                      });
-                    }
-                  }}
+                  onChange={handleStockChange}
                   className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border"
                   placeholder="숫자만 입력"
                   required
@@ -217,17 +242,7 @@ export const ProductManagement = () => {
             <div className="flex justify-end gap-3">
               <button
                 type="button"
-                onClick={() => {
-                  setEditingProduct(null);
-                  setProductForm({
-                    name: "",
-                    price: 0,
-                    stock: 0,
-                    description: "",
-                    discounts: [],
-                  });
-                  setShowProductForm(false);
-                }}
+                onClick={handleCancel}
                 className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
               >
                 취소
