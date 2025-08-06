@@ -1,4 +1,4 @@
-import { CartItem, Coupon, Product } from "../../types";
+import { Product } from "../../types";
 
 export interface ProductWithUI extends Product {
   description?: string;

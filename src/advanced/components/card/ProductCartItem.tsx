@@ -54,7 +54,7 @@ export const ProductCartItem = ({ product }: ProductCartItemProps) => {
 
         <div className="mb-3">
           <p className="text-lg font-bold text-gray-900">
-            {formatProductPrice(product.price, product.id, isAdmin)}
+            {formatProductPrice(product.price, isAdmin)}
           </p>
           {product.discounts.length > 0 && (
             <p className="text-xs text-gray-500">

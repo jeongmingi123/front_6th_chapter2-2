@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react";
 import { Coupon } from "../types";
 import { ProductWithUI } from "./types";
-import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useDebounce } from "./hooks/useDebounce";
 import { useNotifications } from "./hooks/useNotifications";
 import { useCart } from "./hooks/useCart";

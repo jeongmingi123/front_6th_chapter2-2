@@ -10,7 +10,6 @@ import { CartSection } from "./components/cart/CartSection";
 import { AdminDashboard } from "./components/admin/AdminDashboard";
 import { ProductCartList } from "./components/card/ProductCartList";
 import { AppProviders } from "./contexts/AppProviders";
-import { useState, useEffect } from "react";
 import { initialProducts } from "./data/initialData";
 
 const AppContent = () => {

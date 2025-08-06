@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { CouponForm } from "../../types";
 import { Coupon } from "../../../types";
-import { formatPrice } from "../../utils/formatters";
 
 interface CouponManagementProps {
   coupons: Coupon[];
